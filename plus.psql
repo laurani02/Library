@@ -1,0 +1,5 @@
+CREATE TABLE doctor ();
+CREATE TABLE nurse ();
+CREATE TABLE patient ();
+CREATE TABLE employee ();
+CREATE TABLE department ();
