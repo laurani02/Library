@@ -7,14 +7,14 @@
 CREATE TABLE Doctor (
     RoomNr int NOT NULL,
     Specialisation varchar(255) NOT NULL,
-    DoctorID int NOT NULL UNIQUE,
+    DoctorID int PRIMARY KEY,
     CONSTRAINT FK_EmployeeDoctor
     FOREIGN KEY (DoctorID)
     REFERENCES Employee(ID)
 );  
 CREATE TABLE Nurse (
     Degree varchar(255) NOT NULL,
-    NurseID int NOT NULL,
+    NurseID int PRIMARY KEY,
     CONSTRAINT FK_EmployeeNurse
     FOREIGN KEY (NurseID)
     REFERENCES Employee(ID)
