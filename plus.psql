@@ -1,5 +1,56 @@
-CREATE TABLE doctor ();
-CREATE TABLE nurse ();
-CREATE TABLE patient ();
-CREATE TABLE employee ();
-CREATE TABLE department ();
+------------------- LAB 1 ------------------- 
+--             By Laura and Leo            --
+--                                         --
+--        Creating tables for schemas      --
+--               for P+ in lab1            --
+---------------------------------------------
+CREATE TABLE Doctor (
+    RoomNr int NOT NULL,
+    Specialisation varchar(255) NOT NULL,
+    DoctorID,
+    CONSTRAINT FK_EmployeeDoctor
+    FOREIGN KEY (DoctorID)
+    REFERENCES Employee(ID)
+);  
+CREATE TABLE Nurse (
+    Degree varchar(255) NOT NULL,
+    NurseID,
+    CONSTRAINT FK_EmployeeNurse
+    FOREIGN KEY (NurseID)
+    REFERENCES Employee(ID)
+);
+CREATE TABLE Patient (
+    ID int PRIMARY KEY,
+    Name varchar(255) NOT NULL,
+    Age int NOT NULL, 
+    Diagnoses varchar(255) NOT NULL,
+);
+CREATE TABLE Treatment (
+    TreatmentID int PRIMARY KEY,
+    DoctorID,
+    CONSTRAINT FK_TreatmentDoctor
+    FOREIGN KEY (DoctorID)
+    REFERENCES Doctor(DoctorID),
+    PatientID,
+    CONSTRAINT FK_TreatmentPatient
+    FOREIGN KEY (PatientID)
+    REFERENCES Patient(ID)
+);
+CREATE TABLE Employee (
+    ID int PRIMARY KEY,
+    Name varchar(255) NOT NULL,
+    PhoneNr string NOT NULL,
+    StartDate date NOT NULL,
+    MentorID ID NOT NULL,
+    CONSTRAINT FK_DepartmentEmployee
+    FOREIGN KEY (Department)
+    REFERENCES Department(DepartmentName),
+    Department varchar(255),
+    CONSTRAINT FK_Employee
+    FOREIGN KEY (MentorID)
+    REFERENCES Employee(ID)
+);
+CREATE TABLE Department (
+    DepartmentName varchar(255) PRIMARY KEY,
+    BuildingNr int NOT NULL,
+);
