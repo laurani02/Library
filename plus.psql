@@ -23,7 +23,7 @@ CREATE TABLE Patient (
     ID int PRIMARY KEY,
     Name varchar(255) NOT NULL,
     Age int NOT NULL, 
-    Diagnoses varchar(255) NOT NULL,
+    Diagnoses varchar(255) NOT NULL
 );
 CREATE TABLE Treatment (
     TreatmentID int PRIMARY KEY,
@@ -39,7 +39,7 @@ CREATE TABLE Treatment (
 CREATE TABLE Employee (
     ID int PRIMARY KEY,
     Name varchar(255) NOT NULL,
-    PhoneNr string NOT NULL,
+    PhoneNr int NOT NULL,
     StartDate date NOT NULL,
     MentorID ID NOT NULL,
     CONSTRAINT FK_DepartmentEmployee
@@ -52,5 +52,5 @@ CREATE TABLE Employee (
 );
 CREATE TABLE Department (
     DepartmentName varchar(255) PRIMARY KEY,
-    BuildingNr int NOT NULL,
+    BuildingNr int NOT NULL
 );
