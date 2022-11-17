@@ -23,19 +23,19 @@ CREATE TABLE Employee (
     REFERENCES Employee(ID)
 );
 CREATE TABLE Doctor (
-    RoomNr int NOT NULL,
-    Specialisation varchar(255) NOT NULL,
     DoctorID int PRIMARY KEY,
     CONSTRAINT FK_EmployeeDoctor
     FOREIGN KEY (DoctorID)
-    REFERENCES Employee(ID)
+    REFERENCES Employee(ID),
+    RoomNr int NOT NULL,
+    Specialisation varchar(255) NOT NULL
 );  
 CREATE TABLE Nurse (
-    Degree varchar(255) NOT NULL,
     NurseID int PRIMARY KEY,
     CONSTRAINT FK_EmployeeNurse
     FOREIGN KEY (NurseID)
-    REFERENCES Employee(ID)
+    REFERENCES Employee(ID),
+    Degree varchar(255) NOT NULL,
 );
 CREATE TABLE Patient (
     ID int PRIMARY KEY,
