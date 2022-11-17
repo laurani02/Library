@@ -8,6 +8,27 @@
 --    (AKA FIX AUTHOR, PREQUELM GENRE)     --
 --        * 2NF, 3NF, BCNF: TBH IDK        --
 ---------------------------------------------
+CREATE TABLE users (
+    userID int PRIMARY KEY,
+    fullName varchar(255) NOT NULL,
+    email varchar(255) NOT NULL,
+    address varchar(255) NOT 
+);
+CREATE TABLE students (
+    userID int NOT NULL,
+    programme varchar(255),
+    CONSTRAINT FK_StudentUser
+    FOREIGN KEY (userID)
+    REFERENCES users(userID)
+);
+CREATE TABLE admins (
+    userID int,
+    phoneNumber int,
+    department varchar(255),
+    CONSTRAINT FK_AdminUser
+    FOREIGN KEY (userID)
+    REFERENCES users(userID)
+);
 CREATE TABLE book (
     ISBN int PRIMARY KEY,
     author varchar(255),
@@ -17,7 +38,7 @@ CREATE TABLE book (
     prequel varchar(255),
     languag varchar(255) NOT NULL,
     publisher varchar(255) NOT NULL,
-    editin varchar(255)
+    editn varchar(255)
 );
 CREATE TABLE physicalBook (
     physicalID int PRIMARY KEY,
@@ -36,24 +57,11 @@ CREATE TABLE borrowing (
     userID int NOT NULL, 
     physicalID int NOT NULL,
     CONSTRAINT FK_PhysicalBookBorrows
-    CONSTRAINT FK_UserBorrows
     FOREIGN KEY (physicalID)
-    FOREIGN KEY (userID)
     REFERENCES PhysicalBook(physicalID)
+    CONSTRAINT FK_UserBorrows
+    FOREIGN KEY (userID)
     REFERENCES Users(userID)
-);
-CREATE TABLE fines (
-    fineID int PRIMARY KEY,
-    amount int NOT NULL,
-    paid boolean NOT NULL,
-    transactionID int NOT NULL,
-    borrowingID int NOT NULL,
-    CONSTRAINT FK_TransactionFine
-    CONSTRAINT FK_BorrowingFine
-    FOREIGN KEY (transactionID)
-    FOREIGN KEY (borrowingID)
-    REFERENCES transactions(transactionID)
-    REFERENCES borrowing(borrowingID)
 );
 CREATE TABLE transactions (
     transactionID int PRIMARY KEY,
@@ -64,24 +72,16 @@ CREATE TABLE transactions (
     FOREIGN KEY (fineID)
     REFERENCES fines(fineID)
 );
-CREATE TABLE users (
-    userID int PRIMARY KEY,
-    fullName varchar(255) NOT NULL,
-    email varchar(255) NOT NULL,
-    address varchar(255) NOT 
-);
-CREATE TABLE students (
-    userID int NOT NULL,
-    programme varchar(255),
-    CONSTRAINT FK_StudentUser
-    FOREIGN KEY (userID)
-    REFERENCES Users(userID)
-);
-CREATE TABLE admins (
-    userID int,
-    phoneNumber int,
-    department varchar(255),
-    CONSTRAINT FK_AdminUser
-    FOREIGN KEY (userID)
-    REFERENCES users(userID)
+CREATE TABLE fines (
+    fineID int PRIMARY KEY,
+    amount int NOT NULL,
+    paid boolean NOT NULL,
+    transactionID int NOT NULL,
+    borrowingID int NOT NULL,
+    CONSTRAINT FK_TransactionFine
+    FOREIGN KEY (transactionID)
+    REFERENCES transactions(transactionID)
+    CONSTRAINT FK_BorrowingFine
+    FOREIGN KEY (borrowingID)
+    REFERENCES borrowing(borrowingID)
 );
