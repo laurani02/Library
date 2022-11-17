@@ -27,7 +27,7 @@ CREATE TABLE Patient (
 );
 CREATE TABLE Treatment (
     TreatmentID int PRIMARY KEY,
-    DoctorID int NOT NULL,
+    DoctorID int NOT NULL UNIQUE,
     CONSTRAINT FK_TreatmentDoctor
     FOREIGN KEY (DoctorID)
     REFERENCES Doctor(DoctorID),
