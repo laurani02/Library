@@ -7,7 +7,7 @@
 CREATE TABLE Doctor (
     RoomNr int NOT NULL,
     Specialisation varchar(255) NOT NULL,
-    DoctorID int NOT NULL,
+    DoctorID int NOT NULL UNIQUE,
     CONSTRAINT FK_EmployeeDoctor
     FOREIGN KEY (DoctorID)
     REFERENCES Employee(ID)
