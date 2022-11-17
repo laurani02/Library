@@ -14,7 +14,7 @@ CREATE TABLE Doctor (
 );  
 CREATE TABLE Nurse (
     Degree varchar(255) NOT NULL,
-    NurseID,
+    NurseID int NOT NULL,
     CONSTRAINT FK_EmployeeNurse
     FOREIGN KEY (NurseID)
     REFERENCES Employee(ID)
@@ -27,11 +27,11 @@ CREATE TABLE Patient (
 );
 CREATE TABLE Treatment (
     TreatmentID int PRIMARY KEY,
-    DoctorID,
+    DoctorID int NOT NULL,
     CONSTRAINT FK_TreatmentDoctor
     FOREIGN KEY (DoctorID)
     REFERENCES Doctor(DoctorID),
-    PatientID,
+    PatientID int NOT NULL,
     CONSTRAINT FK_TreatmentPatient
     FOREIGN KEY (PatientID)
     REFERENCES Patient(ID)
@@ -41,11 +41,11 @@ CREATE TABLE Employee (
     Name varchar(255) NOT NULL,
     PhoneNr int NOT NULL,
     StartDate date NOT NULL,
-    MentorID ID NOT NULL,
+    MentorID int NOT NULL,
     CONSTRAINT FK_DepartmentEmployee
     FOREIGN KEY (Department)
     REFERENCES Department(DepartmentName),
-    Department varchar(255),
+    Department varchar(255) NOT NULL,
     CONSTRAINT FK_Employee
     FOREIGN KEY (MentorID)
     REFERENCES Employee(ID)
