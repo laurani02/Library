@@ -4,6 +4,24 @@
 --        Creating tables for schemas      --
 --               for P+ in lab1            --
 ---------------------------------------------
+CREATE TABLE Department (
+    DepartmentName varchar(255) PRIMARY KEY,
+    BuildingNr int NOT NULL
+);
+CREATE TABLE Employee (
+    ID int PRIMARY KEY,
+    Name varchar(255) NOT NULL,
+    PhoneNr int NOT NULL,
+    StartDate date NOT NULL,
+    MentorID int NOT NULL,
+    CONSTRAINT FK_DepartmentEmployee
+    FOREIGN KEY (Department)
+    REFERENCES Department(DepartmentName),
+    Department varchar(255) NOT NULL,
+    CONSTRAINT FK_Employee
+    FOREIGN KEY (MentorID)
+    REFERENCES Employee(ID)
+);
 CREATE TABLE Doctor (
     RoomNr int NOT NULL,
     Specialisation varchar(255) NOT NULL,
@@ -35,22 +53,4 @@ CREATE TABLE Treatment (
     CONSTRAINT FK_TreatmentPatient
     FOREIGN KEY (PatientID)
     REFERENCES Patient(ID)
-);
-CREATE TABLE Employee (
-    ID int PRIMARY KEY,
-    Name varchar(255) NOT NULL,
-    PhoneNr int NOT NULL,
-    StartDate date NOT NULL,
-    MentorID int NOT NULL,
-    CONSTRAINT FK_DepartmentEmployee
-    FOREIGN KEY (Department)
-    REFERENCES Department(DepartmentName),
-    Department varchar(255) NOT NULL,
-    CONSTRAINT FK_Employee
-    FOREIGN KEY (MentorID)
-    REFERENCES Employee(ID)
-);
-CREATE TABLE Department (
-    DepartmentName varchar(255) PRIMARY KEY,
-    BuildingNr int NOT NULL
 );
