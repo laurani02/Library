@@ -35,7 +35,7 @@ CREATE TABLE Nurse (
     CONSTRAINT FK_EmployeeNurse
     FOREIGN KEY (NurseID)
     REFERENCES Employee(ID),
-    Degree varchar(255) NOT NULL,
+    Degree varchar(255) NOT NULL
 );
 CREATE TABLE Patient (
     ID int PRIMARY KEY,
