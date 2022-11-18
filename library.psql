@@ -8,6 +8,7 @@
 --    (AKA FIX AUTHOR, PREQUELM GENRE)     --
 --        * 2NF, 3NF, BCNF: TBH IDK        --
 ---------------------------------------------
+
 CREATE TABLE users (
     userID int PRIMARY KEY,
     fullName varchar(255) NOT NULL,
@@ -22,7 +23,7 @@ CREATE TABLE students (
     REFERENCES users(userID)
 );
 CREATE TABLE admins (
-    userID int NOT NULL,
+    userID int,
     phoneNumber int,
     department varchar(255),
     CONSTRAINT FK_AdminUser
@@ -53,12 +54,12 @@ CREATE TABLE borrowing (
     borrowingID int PRIMARY KEY,
     borrowingDate date NOT NULL,
     dueDate date NOT NULL,
-    dateReturned date,
-    userID int NOT NULL, 
+    dateReturned date, 
     physicalID int NOT NULL,
     CONSTRAINT FK_PhysicalBookBorrows
     FOREIGN KEY (physicalID)
-    REFERENCES PhysicalBook(physicalID)
+    REFERENCES PhysicalBook(physicalID),
+    userID int NOT NULL,
     CONSTRAINT FK_UserBorrows
     FOREIGN KEY (userID)
     REFERENCES Users(userID)
@@ -77,10 +78,10 @@ CREATE TABLE fines (
     amount int NOT NULL,
     paid boolean NOT NULL,
     transactionID int NOT NULL,
-    borrowingID int NOT NULL,
     CONSTRAINT FK_TransactionFine
     FOREIGN KEY (transactionID)
-    REFERENCES transactions(transactionID)
+    REFERENCES transactions(transactionID),
+    borrowingID int NOT NULL,
     CONSTRAINT FK_BorrowingFine
     FOREIGN KEY (borrowingID)
     REFERENCES borrowing(borrowingID)
