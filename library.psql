@@ -13,7 +13,7 @@ CREATE TABLE users (
     userID int PRIMARY KEY,
     fullName varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
-    address varchar(255) NOT 
+    address varchar(255) NOT NULL
 );
 CREATE TABLE students (
     userID int NOT NULL,
