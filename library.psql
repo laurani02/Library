@@ -22,7 +22,7 @@ CREATE TABLE students (
     REFERENCES users(userID)
 );
 CREATE TABLE admins (
-    userID int,
+    userID int NOT NULL,
     phoneNumber int,
     department varchar(255),
     CONSTRAINT FK_AdminUser
