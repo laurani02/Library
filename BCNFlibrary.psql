@@ -24,12 +24,12 @@ CREATE TABLE author (
     authorName varchar(255)
 );
 CREATE TABLE book (
-    ISBN int PRIMARY KEY,
+    ISBN varchar(255) PRIMARY KEY,
     title varchar(255) NOT NULL,
     publicationDate date NOT NULL,
     languag varchar(255) NOT NULL,
     publisher varchar(255) NOT NULL,
-    editn varchar(255) NOT NULL,
+    editn varchar(255) NOT NULL
 );
 CREATE TABLE writtenBy (
     authorID int NOT NULL, -- or pk? but 2 pk is weird 
