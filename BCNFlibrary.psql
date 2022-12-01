@@ -35,7 +35,7 @@ CREATE TABLE writtenBy (
     authorID int NOT NULL, -- or pk? but 2 pk is weird 
     CONSTRAINT FK_AuthorWrites
     FOREIGN KEY (authorID)
-    REFERENCES author(authorID)
+    REFERENCES author(authorID),
     ISBN varchar(255) NOT NULL,
     CONSTRAINT FK_ISBNofAuthor
     FOREIGN KEY (ISBN)
@@ -49,7 +49,7 @@ CREATE TABLE bookPrequel (
     ISBN varchar(255) NOT NULL,
     CONSTRAINT FK_BookHasPrequel
     FOREIGN KEY (ISBN)
-    REFERENCES book(ISBN)
+    REFERENCES book(ISBN),
     prequelISBN varchar(255) NOT NULL,
     CONSTRAINT FK_PrequelHasISBN
     FOREIGN KEY (prequelISBN)
@@ -63,7 +63,7 @@ CREATE TABLE bookGenre (
     ISBN varchar(255) NOT NULL,
     CONSTRAINT FK_BookHasGenre
     FOREIGN KEY (ISBN)
-    REFERENCES book(ISBN)
+    REFERENCES book(ISBN),
     genreID int NOT NULL,
     CONSTRAINT GenreHasID
     FOREIGN KEY (genreID)
