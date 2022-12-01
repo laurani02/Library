@@ -1,0 +1,111 @@
+CREATE TABLE users (
+    userID int PRIMARY KEY,
+    fullName varchar(255) NOT NULL,
+    email varchar(255) NOT NULL,
+    addres varchar(255) NOT NULL -- it cant be called address :(
+);
+CREATE TABLE students (
+    userID int NOT NULL,
+    programme varchar(255),
+    CONSTRAINT FK_StudentUser
+    FOREIGN KEY (userID)
+    REFERENCES users(userID)
+);
+CREATE TABLE admins (
+    userID int NOT NULL,
+    phoneNumber int,
+    department varchar(255),
+    CONSTRAINT FK_AdminUser
+    FOREIGN KEY (userID)
+    REFERENCES users(userID)
+);
+CREATE TABLE author (
+    authorID int PRIMARY KEY,
+    authorName varchar(255)
+);
+CREATE TABLE book (
+    ISBN int PRIMARY KEY,
+    title varchar(255) NOT NULL,
+    publicationDate date NOT NULL,
+    languag varchar(255) NOT NULL,
+    publisher varchar(255) NOT NULL,
+    editn varchar(255)
+);
+CREATE TABLE writtenBy (
+    authorID int NOT NULL, -- or pk? but 2 pk is weird 
+    CONSTRAINT FK_AuthorWrites
+    FOREIGN KEY (authorID)
+    REFERENCES author(authorID)
+    ISBN varchar(255) NOT NULL,
+    CONSTRAINT FK_ISBNofAuthor
+    FOREIGN KEY (ISBN)
+    REFERENCES book(ISBN)
+);
+CREATE TABLE prequel(
+    prequelISBN varchar(255) PRIMARY KEY,
+    prequelName varchar(255) NOT NULL
+);
+CREATE TABLE bookPrequel (
+    ISBN varchar(255) NOT NULL,
+    CONSTRAINT FK_BookHasPrequel
+    FOREIGN KEY (ISBN)
+    REFERENCES book(ISBN)
+    prequelISBN varchar(255) NOT NULL,
+    CONSTRAINT FK_PrequelHasISBN
+    FOREIGN KEY (prequelISBN)
+    REFERENCES prequel(prequelISBN)
+);
+CREATE TABLE genre (
+    genreID int PRIMARY KEY,
+    genreName varchar(255) NOT NULL
+);
+CREATE TABLE bookGenre (
+    ISBN varchar(255) NOT NULL,
+    CONSTRAINT FK_BookHasGenre
+    FOREIGN KEY (ISBN)
+    REFERENCES book(ISBN)
+    genreID int NOT NULL,
+    CONSTRAINT GenreHasID
+    FOREIGN KEY (genreID)
+    REFERENCES genre(genreID)
+);
+CREATE TABLE physicalBook (
+    physicalID int PRIMARY KEY,
+    damage boolean NOT NULL,
+    borrowed boolean NOT NULL,
+    ISBN varchar(255) NOT NULL,
+    CONSTRAINT FK_BookIs
+    FOREIGN KEY (ISBN)
+    REFERENCES book(ISBN)
+);
+CREATE TABLE borrowing (
+    borrowingID int PRIMARY KEY,
+    borrowingDate date NOT NULL,
+    dueDate date NOT NULL,
+    dateReturned date, 
+    physicalID int NOT NULL,
+    CONSTRAINT FK_PhysicalBookBorrows
+    FOREIGN KEY (physicalID)
+    REFERENCES physicalBook(physicalID),
+    userID int NOT NULL,
+    CONSTRAINT FK_UserBorrows
+    FOREIGN KEY (userID)
+    REFERENCES users(userID)
+);
+CREATE TABLE fines (
+    fineID int PRIMARY KEY,
+    amount int NOT NULL,
+    borrowingID int NOT NULL,
+    CONSTRAINT FK_BorrowingFine
+    FOREIGN KEY (borrowingID)
+    REFERENCES borrowing(borrowingID)
+);
+CREATE TABLE transactions (
+    transactionID int PRIMARY KEY,
+    paymentDate date NOT NULL,
+    paymentMethod varchar(255) NOT NULL,
+    fineID int NOT NULL,
+    CONSTRAINT FK_FinesTransaction
+    FOREIGN KEY (fineID)
+    REFERENCES fines(fineID)
+);
