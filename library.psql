@@ -65,6 +65,16 @@ CREATE TABLE borrowing (
     REFERENCES Users(userID)
 );
 
+CREATE TABLE fines (
+    fineID int PRIMARY KEY,
+    amount int NOT NULL,
+    paid boolean NOT NULL,
+    transactionID int NOT NULL,
+    borrowingID int NOT NULL,
+    CONSTRAINT FK_BorrowingFine
+    FOREIGN KEY (borrowingID)
+    REFERENCES borrowing(borrowingID)
+);
 CREATE TABLE transactions (
     transactionID int PRIMARY KEY,
     paymentDate date NOT NULL,
@@ -73,17 +83,4 @@ CREATE TABLE transactions (
     CONSTRAINT FK_FinesTransaction
     FOREIGN KEY (fineID)
     REFERENCES fines(fineID)
-);
-CREATE TABLE fines (
-    fineID int PRIMARY KEY,
-    amount int NOT NULL,
-    paid boolean NOT NULL,
-    transactionID int NOT NULL,
-    CONSTRAINT FK_TransactionFine
-    FOREIGN KEY (transactionID)
-    REFERENCES transactions(transactionID),
-    borrowingID int NOT NULL,
-    CONSTRAINT FK_BorrowingFine
-    FOREIGN KEY (borrowingID)
-    REFERENCES borrowing(borrowingID)
 );

@@ -6,18 +6,18 @@ CREATE TABLE users (
 );
 CREATE TABLE students (
     userID int NOT NULL,
-    programme varchar(255),
     CONSTRAINT FK_StudentUser
     FOREIGN KEY (userID)
-    REFERENCES users(userID)
+    REFERENCES users(userID),
+    programme varchar(255) NOT NULL
 );
 CREATE TABLE admins (
     userID int NOT NULL,
-    phoneNumber int,
-    department varchar(255),
     CONSTRAINT FK_AdminUser
     FOREIGN KEY (userID)
-    REFERENCES users(userID)
+    REFERENCES users(userID),
+    phoneNumber int,
+    department varchar(255)
 );
 CREATE TABLE author (
     authorID int PRIMARY KEY,
@@ -29,7 +29,7 @@ CREATE TABLE book (
     publicationDate date NOT NULL,
     languag varchar(255) NOT NULL,
     publisher varchar(255) NOT NULL,
-    editn varchar(255)
+    editn varchar(255) NOT NULL,
 );
 CREATE TABLE writtenBy (
     authorID int NOT NULL, -- or pk? but 2 pk is weird 
