@@ -1,0 +1,57 @@
+-- 1 --
+SELECT fullname as name FROM users;
+
+-- 2 --
+SELECT book.title,
+genre.genreName as genre FROM bookgenre INNER JOIN book ON book.ISBN =
+bookgenre.ISBN INNER JOIN genre ON genre.genreID = 
+bookgenre.genreID ORDER BY title;
+
+-- 3 --
+SELECT count(CASE WHEN borrowed THEN 1 END) FROM physicalbook
+
+-- 4 --
+SELECT book.title, count(physicalbook.ISBN) FROM book 
+LEFT JOIN physicalbook ON physicalbook.ISBN =
+book.ISBN GROUP BY book.title;
+
+-- 5 --
+
+SELECT ROUND(cast(count(distinct borrowing.borrowingid) as decimal) / count(distinct users.userid), 2)
+as average_books_per_user
+FROM borrowing, users
+WHERE borrowing.borrowingdate >= '2022-01-01';
+
+-- P+ --
+
+WITH RECURSIVE
+t1(n) AS (
+    VALUES(2)
+UNION ALL
+    SELECT n+1 FROM t1 WHERE n < 100
+),
+t2(n, o) AS (
+    SELECT 2*n, 2 FROM t1 WHERE 2*n <= 100
+UNION ALL
+    (
+        WITH t3(k) AS (
+            SELECT max(o) OVER () + 1 FROM t2
+        ),
+        t4(k) AS (
+            SELECT DISTINCT k FROM t3
+        )
+        SELECT k*n, k
+        FROM
+            t1
+        CROSS JOIN
+            t4
+        WHERE k*k <= 100
+    )
+),
+
+t5(n) AS (
+    SELECT n FROM t1 EXCEPT
+    SELECT n FROM t2
+)
+
+SELECT sum(n) FROM t5;
