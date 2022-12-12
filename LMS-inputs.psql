@@ -1,4 +1,4 @@
-NSERT INTO BOOKS (bookID,title,pages) VALUES (90188,'Fundamentals of Wavelets',111);
+INSERT INTO BOOKS (bookID,title,pages) VALUES (90188,'Fundamentals of Wavelets',111);
 INSERT INTO BOOKS (bookID,title,pages) VALUES (60859,'Data Smart',113);
 INSERT INTO BOOKS (bookID,title,pages) VALUES (47657,'God Created the Integers',400);
 INSERT INTO BOOKS (bookID,title,pages) VALUES (27181,'Superfreakonomics',400);
