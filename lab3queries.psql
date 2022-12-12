@@ -1,0 +1,6 @@
+-- 1 --
+
+SELECT books.title, String_agg(genre.genre, ',' ) AS genre
+FROM books LEFT JOIN genre ON books.bookid = genre.bookid
+GROUP BY books.title
+ORDER BY books.title;
