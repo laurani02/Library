@@ -38,3 +38,21 @@ WHERE EXTRACT(MONTH FROM borrowing.dob) = 2
 ORDER BY books.title COLLATE "C"
 
 -- 5 -- 
+
+WITH RECURSIVE preqid AS (
+        SELECT books.title, books.bookid, prequels.prequelid
+        FROM books
+        INNER JOIN prequels USING(bookid)
+        FULL OUTER JOIN resources USING(bookid)
+        WHERE books.bookid = 8713 
+    UNION ALL
+        SELECT books.title, books.bookid, prequels.prequelid
+        FROM books
+        LEFT JOIN prequels USING(bookid)
+        FULL OUTER JOIN resources USING(bookid)
+        JOIN preqid ON books.bookid = preqid.prequelid
+        GROUP BY books.title, books.bookid, prequels.prequelid
+)
+SELECT * FROM preqid;
+
+-- P+ --
