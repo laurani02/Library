@@ -78,4 +78,8 @@ CREATE TABLE TRANSACTIONS
  );
  
 --drop table admins,author,books,borrowing,edition,fines,genre,language,prequels,resources,students,transactions,users; 
+<<<<<<< HEAD
  
+=======
+ 
+>>>>>>> eaac074bd51baeabc74302c8ec79598f9a00736d

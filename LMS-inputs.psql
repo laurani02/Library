@@ -3538,4 +3538,8 @@ INSERT INTO GENRE (bookID,genre) VALUES (70579,'Eastern');
 INSERT INTO GENRE (bookID,genre) VALUES (11086,'Eastern');
 INSERT INTO GENRE (bookID,genre) VALUES (55340,'Eastern');
 INSERT INTO GENRE (bookID,genre) VALUES (91511,'Eastern');
+<<<<<<< HEAD
 INSERT INTO GENRE (bookID,genre) VALUES (25359,'Southern');
+=======
+INSERT INTO GENRE (bookID,genre) VALUES (25359,'Southern');
+>>>>>>> eaac074bd51baeabc74302c8ec79598f9a00736d
