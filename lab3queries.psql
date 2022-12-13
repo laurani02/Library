@@ -28,8 +28,9 @@ LIMIT 5;
 
 -- 4 --
 
-SELECT books.title, borrowing.dob,
-CASE WHEN prequels.prequelid IS NULL THEN 'f' ELSE 't' END AS every
+SELECT books.title,
+CASE WHEN prequels.prequelid IS NULL THEN 'f' ELSE 't' END AS every,
+borrowing.dob
 FROM books
 INNER JOIN resources USING(bookid)
 INNER JOIN borrowing USING(physicalid)
@@ -56,3 +57,4 @@ WITH RECURSIVE preqid AS (
 SELECT * FROM preqid;
 
 -- P+ --
+
