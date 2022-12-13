@@ -6,6 +6,7 @@ GROUP BY books.title
 ORDER BY books.title;
 
 -- 2 --
+
 WITH borrowing_count AS (
     SELECT books.title, count(borrowing.borrowingid)
     FROM books
@@ -22,3 +23,18 @@ LEFT JOIN borrowing ON borrowing.physicalid = resources.physicalid
 WHERE genre.genre = 'RomCom'
 GROUP BY books.title
 LIMIT 5;
+
+-- 3 --
+
+-- 4 --
+
+SELECT books.title, borrowing.dob,
+CASE WHEN prequels.prequelid IS NULL THEN 'f' ELSE 't' END AS every
+FROM books
+INNER JOIN resources USING(bookid)
+INNER JOIN borrowing USING(physicalid)
+FULL OUTER JOIN prequels USING(bookid)
+WHERE EXTRACT(MONTH FROM borrowing.dob) = 2
+ORDER BY books.title COLLATE "C"
+
+-- 5 -- 
