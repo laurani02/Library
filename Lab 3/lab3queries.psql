@@ -26,6 +26,32 @@ LIMIT 5;
 
 -- 3 --
 
+WITH late AS (
+    SELECT date_part('week', DoR) AS week, COUNT(DoR) AS late
+        FROM Borrowing
+        WHERE DoR > DoE
+        GROUP BY week
+        ORDER BY week
+),
+returned AS (
+    SELECT date_part('week', DoR) AS week, COUNT(DoR) as every
+        FROM Borrowing
+        GROUP BY week
+        ORDER BY week
+),
+borrowed AS (
+    SELECT date_part('week', DoB) AS week, COUNT(DoB) as borrowed
+        FROM Borrowing
+        GROUP BY week
+        ORDER BY week
+)
+SELECT week, borrowed, every, late
+    FROM ((late
+        INNER JOIN returned USING(week))
+        INNER JOIN borrowed USING(week))
+    ORDER BY week
+    LIMIT 29;
+
 -- 4 --
 
 SELECT books.title,
@@ -44,17 +70,14 @@ WITH RECURSIVE preqid AS (
         SELECT books.title, books.bookid, prequels.prequelid
         FROM books
         INNER JOIN prequels USING(bookid)
-        FULL OUTER JOIN resources USING(bookid)
         WHERE books.bookid = 8713 
     UNION ALL
         SELECT books.title, books.bookid, prequels.prequelid
         FROM books
         LEFT JOIN prequels USING(bookid)
-        FULL OUTER JOIN resources USING(bookid)
         JOIN preqid ON books.bookid = preqid.prequelid
         GROUP BY books.title, books.bookid, prequels.prequelid
 )
 SELECT * FROM preqid;
 
 -- P+ --
-
