@@ -96,4 +96,4 @@ WITH RECURSIVE series as (
 )
 SELECT concat as series, pages
 FROM series books
-where books.bookid NOT IN (SELECT prequelid from prequels);
+WHERE books.bookid NOT IN (SELECT prequelid from prequels);
