@@ -81,3 +81,19 @@ WITH RECURSIVE preqid AS (
 SELECT * FROM preqid;
 
 -- P+ --
+WITH RECURSIVE series as (
+    SELECT books.bookid, books.title, concat(books.title), pages
+    FROM books
+    WHERE books.bookid IN (SELECT prequelid FROM prequels)
+    AND books.bookid NOT IN (SELECT bookid FROM prequels)
+    UNION
+    SELECT books.bookID, books.title, concat(series.concat, ' -> ', books.title), books.pages + series.pages as pages
+    FROM series
+    INNER JOIN prequels 
+    ON series.bookID = prequels.prequelID
+    INNER JOIN books
+    ON prequels.bookID = books.bookid
+)
+SELECT concat as series, pages
+FROM series books
+where books.bookid NOT IN (SELECT prequelid from prequels);
