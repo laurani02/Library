@@ -13,18 +13,16 @@ WITH borrowing_count AS (
     LEFT JOIN resources ON resources.bookid = books.bookid
     LEFT JOIN borrowing ON borrowing.physicalid = resources.physicalid
     GROUP BY books.title)
-SELECT * FROM
-(
-SELECT books.title,
-RANK ( ) OVER (
-    ORDER BY count(borrowing.borrowingid) DESC
-) rank 
-FROM books LEFT JOIN genre ON genre.bookid = books.bookid 
-LEFT JOIN resources ON resources.bookid = books.bookid
-LEFT JOIN borrowing ON borrowing.physicalid = resources.physicalid
-WHERE genre.genre = 'RomCom'
-GROUP BY books.title
-) _
+SELECT * FROM (
+    SELECT books.title,
+    RANK ( ) OVER (
+        ORDER BY count(borrowing.borrowingid) DESC
+    ) rank 
+    FROM books LEFT JOIN genre ON genre.bookid = books.bookid 
+    LEFT JOIN resources ON resources.bookid = books.bookid
+    LEFT JOIN borrowing ON borrowing.physicalid = resources.physicalid
+    WHERE genre.genre = 'RomCom'
+    GROUP BY books.title) _
 WHERE rank <= 5;
 
 -- 3 --
