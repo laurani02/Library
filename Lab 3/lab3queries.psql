@@ -44,14 +44,16 @@ borrowed AS (
     SELECT date_part('week', DoB) AS week, COUNT(DoB) as borrowed
         FROM Borrowing
         GROUP BY week
+
         ORDER BY week
 )
-SELECT week, borrowed, every, late
+SELECT * FROM ( 
+    SELECT week, borrowed, every, late
     FROM ((late
-        INNER JOIN returned USING(week))
-        INNER JOIN borrowed USING(week))
+        RIGHT JOIN returned USING(week))
+        LEFT JOIN borrowed USING(week))
     ORDER BY week
-    LIMIT 29;
+) _ WHERE week < 31
 
 -- 4 --
 
