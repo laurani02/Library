@@ -1,0 +1,117 @@
+CREATE TABLE Books
+(bookID integer PRIMARY KEY,
+title varchar(100) NOT NULL,
+pages integer NOT NULL CONSTRAINT positive_pages CHECK (pages > 0));
+
+CREATE TABLE Resources
+(physicalID integer PRIMARY KEY,
+bookID integer NOT NULL,
+CONSTRAINT FK_BookResources
+FOREIGN KEY (bookID)
+REFERENCES Books(bookID),
+damaged BOOLEAN NOT NULL DEFAULT false);
+
+CREATE TABLE Prequels
+(bookID INTEGER NOT NULL,
+CONSTRAINT FK_BookPrequel
+FOREIGN KEY (bookID)
+REFERENCES Books(bookID),
+prequelID INTEGER NOT NULL,
+PRIMARY KEY (bookID,prequelID));
+
+CREATE TABLE Edition
+(bookID INTEGER NOT NULL,
+CONSTRAINT FK_BookEdition
+FOREIGN KEY (bookID)
+REFERENCES Books(bookID),
+ISBN varchar(20) NOT NULL,
+edition integer NOT NULL CONSTRAINT positive_edition CHECK (edition > 0),
+publisher varchar(100) NOT NULL,
+DoP Date NOT NULL,
+PRIMARY KEY (bookID));
+
+CREATE TABLE Author
+(bookID integer NOT NULL,
+CONSTRAINT FK_BookAuthor
+FOREIGN KEY (bookID)
+REFERENCES Books(bookID),
+author varchar(100) NOT NULL,
+PRIMARY KEY (bookID, author));
+
+CREATE TABLE Genre
+(bookID integer NOT NULL,
+CONSTRAINT FK_BookGenre
+FOREIGN KEY (bookID)
+REFERENCES Books(bookID),
+genre varchar(100) NOT NULL,
+PRIMARY KEY (bookID, genre));
+
+CREATE TABLE Language
+(bookID INTEGER NOT NULL,
+CONSTRAINT FK_BookLanguage
+FOREIGN KEY (bookID)
+REFERENCES Books(bookID),
+language varchar(100) NOT NULL,
+PRIMARY KEY (bookID, language));
+
+CREATE TABLE Users
+(userID integer PRIMARY KEY,
+name varchar(100) NOT NULL,
+address varchar(100) NOT NULL,
+email varchar(50) NOT NULL CONSTRAINT kth_email CHECK ('@kth.se' = RIGHT(email, 7)));
+
+CREATE TABLE Students
+(userID integer NOT NULL,
+CONSTRAINT FK_StudentUser
+FOREIGN KEY (userID)
+REFERENCES Users(userID),
+program varchar(100) NOT NULL,
+PRIMARY KEY (userID)
+);
+
+CREATE TABLE Admins
+(userID integer NOT NULL,
+CONSTRAINT FK_AdminUser
+FOREIGN KEY (userID)
+REFERENCES Users(userID),
+department varchar(100) NOT NULL,
+phoneNumber varchar(15) NOT NULL,
+PRIMARY KEY (userID)
+);
+
+CREATE TABLE Borrowing
+(borrowingID Integer PRIMARY KEY,
+physicalID integer NOT NULL,
+CONSTRAINT FK_BorrowedBookPhysicalID
+FOREIGN KEY (physicalID)
+REFERENCES Resources(physicalID),
+userID integer NOT NULL,
+CONSTRAINT FK_Borrower
+FOREIGN KEY (userID)
+REFERENCES Users(userID),
+DoB DATE DEFAULT CURRENT_DATE NOT NULL,
+DoR DATE CONSTRAINT return_later_than_borrow CHECK (DoR>= DoB),
+DoE DATE DEFAULT CURRENT_DATE+7 NOT NULL);
+
+CREATE TYPE pMethod AS ENUM ('Klarna', 'Swish', 'Card','Cash');
+
+CREATE TABLE Fines
+(borrowingID integer NOT NULL,
+CONSTRAINT FK_BorrowingFine
+FOREIGN KEY (borrowingID)
+REFERENCES Borrowing(borrowingID),
+amount integer NOT NULL CONSTRAINT positive_amount CHECK (amount>0),
+PRIMARY KEY (borrowingID));
+ 
+CREATE TABLE TRANSACTIONS
+(transactionID integer PRIMARY KEY,
+borrowingID integer NOT NULL,
+CONSTRAINT FK_FineTransaction
+FOREIGN KEY (borrowingID)
+REFERENCES Fines(borrowingID),
+paymentMethod pMethod NOT NULL,
+DoP DATE NOT NULL
+);
+ 
+--drop table admins,author,books,borrowing,edition,fines,genre,language,prequels,resources,students,transactions,users, pmethod; 
+ 
