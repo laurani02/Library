@@ -1,0 +1,17 @@
+--- Use these insertions to check that the constraints in lab 4 are working properly ---
+
+
+-- Negative edition --
+INSERT INTO EDITION (bookID,ISBN,edition,publisher,DoP) VALUES (67115,'2419-2707-8419-3866',-4,'Penguin','1963-03-14');
+
+-- Negative fine --
+INSERT INTO FINES (borrowingID,amount) VALUES (39824,-200);
+
+-- Negative pages --
+INSERT INTO BOOKS (bookID,title,pages) VALUES (66749,'Outsider',-422);
+
+-- Returning a book before it has been borrowed --
+INSERT INTO Borrowing(BorrowingID,physicalID,userID,DoB,DoR,DoE) VALUES(99, 6534462,1,'2021-03-01','2021-02-20','2021-03-08');
+
+-- Kth.nu addresses --
+INSERT INTO USERS (userID,name,email,address) VALUES (158,'Erick Ferencz','ErFer@kth.nu','20 S Babcock St');
