@@ -1,9 +1,10 @@
 -- 1 --
 
-WITH borderpairs AS(
+WITH borderpairs AS (
     SELECT Country1, Country2 FROM borders 
     UNION ALL
-    SELECT Country2, Country1 FROM borders)
+    SELECT Country2, Country1 FROM borders
+)
 SELECT  Country1 AS name, COUNT(Country2) AS num
 FROM borderpairs 
 GROUP BY Country1
