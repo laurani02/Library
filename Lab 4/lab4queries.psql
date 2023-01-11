@@ -1,14 +1,14 @@
 -- 1 --
 
-WITH borderpairs AS (
+WITH borderpairs AS(
     SELECT Country1, Country2 FROM borders 
     UNION ALL
-    SELECT Country2, Country1 FROM borders
-)
-SELECT  Country1 AS name, COUNT(Country2) AS num
-FROM borderpairs 
-GROUP BY Country1
+    SELECT Country2, Country1 FROM borders)
+SELECT  name, COUNT(Country2) AS num
+FROM Country INNER JOIN borderpairs ON Country1 = Code 
+GROUP BY name
 ORDER BY COUNT(Country2);
+
 
 -- 2 --
 
@@ -38,4 +38,5 @@ ORDER BY numberspeakers DESC;
 --  psql -h psql-dd1368-ht21.sys.kth.se
 
 --  znV9pZJv
-Country1 AS name
+
+
