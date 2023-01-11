@@ -1,14 +1,14 @@
 -- 1 --
 
-WITH borderpairs AS(
+WITH borderpairs AS (
     SELECT Country1, Country2 FROM borders 
     UNION ALL
-    SELECT Country2, Country1 FROM borders)
+    SELECT Country2, Country1 FROM borders
+)
 SELECT  name, COUNT(Country2) AS num
 FROM Country INNER JOIN borderpairs ON Country1 = Code 
 GROUP BY name
 ORDER BY COUNT(Country2);
-
 
 -- 2 --
 
@@ -19,14 +19,26 @@ WITH speakersoflangincount AS (
     WHERE Percentage IS NOT NULL
     GROUP BY Language, Population, Percentage
 )
-SELECT Language, SUM(speakers) AS numberspeakers
+SELECT Language, SUM(speakers) AS numberspeaker
 FROM speakersoflangincount
 GROUP BY Language
 ORDER BY numberspeakers DESC;
 
 -- 3 --
 
-
+WITH borderpairs AS (
+    SELECT Country1, GDP as GDP1, Country2
+    FROM borders INNER JOIN Economy ON Country = Country1
+    WHERE GDP IS NOT NULL
+    UNION ALL
+    SELECT Country2, GDP AS GDP1, Country1 
+    FROM borders INNER JOIN Economy ON Country = Country2
+    WHERE GDP IS NOT NULL
+)
+SELECT Country1, gdp1, Country2, gdp as gdp2, ROUND(gdp1/gdp) AS ratio
+FROM borderpairs INNER JOIN Economy ON Country = Country2
+WHERE GDP IS NOT NULL
+ORDER BY ratio DESC;
 
 -- 4 --
 
@@ -34,9 +46,5 @@ ORDER BY numberspeakers DESC;
 
 -- 5 --
 
-
---  psql -h psql-dd1368-ht21.sys.kth.se
-
---  znV9pZJv
 
 
