@@ -1,0 +1,40 @@
+-- 1 --
+
+WITH borderpairs AS(
+    SELECT Country1, Country2 FROM borders 
+    UNION ALL
+    SELECT Country2, Country1 FROM borders)
+SELECT  Country1 AS name, COUNT(Country2) AS num
+FROM borderpairs 
+GROUP BY Country1
+ORDER BY COUNT(Country2);
+
+-- 2 --
+
+WITH speakersoflangincount AS (
+    SELECT Language,
+    ROUND(CAST(Population AS decimal)*Percentage) as speakers
+    FROM Spoken INNER JOIN Country on Spoken.Country = Country.Code
+    WHERE Percentage IS NOT NULL
+    GROUP BY Language, Population, Percentage
+)
+SELECT Language, SUM(speakers) AS numberspeakers
+FROM speakersoflangincount
+GROUP BY Language
+ORDER BY numberspeakers DESC;
+
+-- 3 --
+
+
+
+-- 4 --
+
+
+
+-- 5 --
+
+
+--  psql -h psql-dd1368-ht21.sys.kth.se
+
+--  znV9pZJv
+Country1 AS name
