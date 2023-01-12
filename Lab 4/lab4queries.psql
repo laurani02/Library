@@ -39,12 +39,3 @@ SELECT Country1, gdp1, Country2, gdp as gdp2, ROUND(gdp1/gdp) AS ratio
 FROM borderpairs INNER JOIN Economy ON Country = Country2
 WHERE GDP IS NOT NULL
 ORDER BY ratio DESC;
-
--- 4 --
-
-
-
--- 5 --
-
-
-
